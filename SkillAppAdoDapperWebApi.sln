@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.WEB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.DAL", "SkillAppAdoDapperWebApi.DAL\SkillAppAdoDapperWebApi.DAL.csproj", "{2297F345-FC2C-4ACD-A64E-59645510B50A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.BLL", "SkillAppAdoDapperBL\SkillAppAdoDapperWebApi.BLL.csproj", "{1C8927F4-F130-41B6-BEB7-06A5BBB7698C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.BLL", "SkillAppAdoDapperWebApi.BLL\SkillAppAdoDapperWebApi.BLL.csproj", "{F5B91188-CBAE-4EFD-915A-128A55ED3B69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{2297F345-FC2C-4ACD-A64E-59645510B50A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2297F345-FC2C-4ACD-A64E-59645510B50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2297F345-FC2C-4ACD-A64E-59645510B50A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C8927F4-F130-41B6-BEB7-06A5BBB7698C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C8927F4-F130-41B6-BEB7-06A5BBB7698C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C8927F4-F130-41B6-BEB7-06A5BBB7698C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C8927F4-F130-41B6-BEB7-06A5BBB7698C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B91188-CBAE-4EFD-915A-128A55ED3B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B91188-CBAE-4EFD-915A-128A55ED3B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B91188-CBAE-4EFD-915A-128A55ED3B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B91188-CBAE-4EFD-915A-128A55ED3B69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

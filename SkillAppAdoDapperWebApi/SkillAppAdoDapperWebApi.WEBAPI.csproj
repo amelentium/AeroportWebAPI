@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SkillAppAdoDapperBL\SkillAppAdoDapperWebApi.BLL.csproj" />
+    <ProjectReference Include="..\SkillAppAdoDapperWebApi.BLL\SkillAppAdoDapperWebApi.BLL.csproj" />
     <ProjectReference Include="..\SkillAppAdoDapperWebApi.DAL\SkillAppAdoDapperWebApi.DAL.csproj" />
   </ItemGroup>
 
