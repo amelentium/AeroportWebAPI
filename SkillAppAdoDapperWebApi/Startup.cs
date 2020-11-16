@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using SkillManagement.DataAccess.Infrastructure;
 using SkillManagement.DataAccess.Interfaces;
 using SkillManagement.DataAccess.Interfaces.SQLInterfaces.ISQLRepositories;
@@ -20,6 +21,7 @@ using SkillManagement.DataAccess.Services.SQL_Services;
 using SkillManagement.DataAccess.sqlunitOfWork;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using SkillAppAdoDapperWebApi.DAL.Infrastructure;
 
 namespace SkillAppAdoDapperWebApi
 {
@@ -34,6 +36,8 @@ namespace SkillAppAdoDapperWebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AeroContext>(options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SkillAeroDB;Trusted_Connection=True;"));
+
             services.AddControllers();
             #region SQL repositories
             services.AddTransient<ISQLAeroplaneRepository, SQLAeroplaneRepository>();
