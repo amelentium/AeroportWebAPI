@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System;
+using System.Linq.Expressions;
 
 namespace SkillManagement.DataAccess.Interfaces
 {
-    public interface IGenericRepository<TEntity, TId> where TEntity : IEntity<TId>
+    public interface IGenericRepository<TEntity, TId> where TEntity : class
     {
         IEnumerable<TEntity> GetAll();
 

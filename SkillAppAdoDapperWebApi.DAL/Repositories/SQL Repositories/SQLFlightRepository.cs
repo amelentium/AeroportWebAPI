@@ -8,15 +8,16 @@ using System.Configuration;
 using System.Data;
 using System;
 using Microsoft.Extensions.Configuration;
+using SkillAppAdoDapperWebApi.DAL.Infrastructure;
 
 namespace SkillManagement.DataAccess.Repositories
 {
     public class SQLFlightRepository : GenericRepository<SQLFlight, int>, ISQLFlightRepository
     {
-        private static readonly string _tableName = "Flight";
-        public SQLFlightRepository(IConnectionFactory connectionFactory, IConfiguration config) : base(connectionFactory, _tableName, false)
+        private static readonly string _tableName = "Flights";
+        public SQLFlightRepository(IConnectionFactory connectionFactory, IConfiguration config, AeroDbContext context) : base(connectionFactory, _tableName, false, context)
         {
-            var connectionString = config["connectionString:DefaultConnection"];
+            var connectionString = config["connectionString:EFConnection"];
             connectionFactory.SetConnection(connectionString);
         }
 

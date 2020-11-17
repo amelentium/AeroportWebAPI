@@ -27,16 +27,15 @@ namespace SkillAppAdoDapperWebApi
 {
     public class Startup
     {
+        private readonly IConfiguration _Configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AeroContext>(options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SkillAeroDB;Trusted_Connection=True;"));
+            services.AddDbContext<AeroDbContext>(options => options.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = SkillAeroDB; Trusted_Connection = True;"));
 
             services.AddControllers();
             #region SQL repositories
@@ -56,7 +55,7 @@ namespace SkillAppAdoDapperWebApi
             services.AddTransient<ISQLunitOfWork, SQLsqlunitOfWork>();
 
             services.AddTransient<IConnectionFactory, ConnectionFactory>();
-            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IConfiguration>(_Configuration);
 
             services.AddSwaggerGen(c =>
             {

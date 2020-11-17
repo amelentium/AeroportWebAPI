@@ -1,67 +1,51 @@
-﻿using Dapper;
-using SkillManagement.DataAccess.Interfaces;
+﻿using SkillManagement.DataAccess.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using SkillAppAdoDapperWebApi.DAL.Infrastructure;
+using Microsoft.Data.SqlClient;
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Common;
+using System.Linq.Expressions;
 
 namespace SkillManagement.DataAccess.Core
 {
-    public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> where TEntity : IEntity<TId>
+    public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> where TEntity : class
     {
         protected IConnectionFactory _connectionFactory;
         private readonly string _tableName;
         private readonly bool _isSoftDelete;
+        private readonly AeroDbContext _context;
 
-        public GenericRepository(IConnectionFactory connectionFactory, string tableName, bool isSoftDelete)
+
+        public GenericRepository(IConnectionFactory connectionFactory, string tableName, bool isSoftDelete, AeroDbContext context)
         {
             _connectionFactory = connectionFactory;
             _tableName = tableName;
             _isSoftDelete = isSoftDelete;
+            _context = context;
         }
 
         public TEntity Add(TEntity entity)
         {
             var stringOfColumns = string.Join(", ", GetColumns());
             var stringOfProperties = string.Join(", ", GetProperties(entity));
-            var query = "SP_InsertRecordToTable";
 
-            using (var db = _connectionFactory.GetSqlConnection)
-            {
-                var Id = db.Query<TId>(
-                    sql: query,
-                    param: new { P_tableName = _tableName, P_columnsString = stringOfColumns, P_propertiesString = stringOfProperties },
-                    commandType: CommandType.StoredProcedure).FirstOrDefault();
+            _context.Set<TEntity>().Add(entity);
+            _context.SaveChanges();
 
-                return Get(Id);
-            }
+            return entity;
         }
 
         public TEntity Get(TId Id)
         {
-            var query = "SP_GetRecordByIdFromTable";
-
-            using (var db = _connectionFactory.GetSqlConnection)
-            {
-                return db.Query<TEntity>(query,
-                    new { P_tableName = _tableName, P_Id = Id },
-                    commandType: CommandType.StoredProcedure).FirstOrDefault();
-            }
+            return _context.Set<TEntity>().Find(Id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            var query = "SP_GetAllRecordsFromTable";
-
-            using (var db = _connectionFactory.GetSqlConnection)
-            {
-                return db.Query<TEntity>(query,
-                    new { P_tableName = _tableName },
-                    commandType: CommandType.StoredProcedure);
-            }
+            return _context.Set<TEntity>().ToList();
         }
 
         public TEntity Update(TEntity entity, TId Id)
@@ -70,51 +54,30 @@ namespace SkillManagement.DataAccess.Core
             var properties = GetProperties(entity);
             columns = columns.Zip(properties, (column, property) => column + " = " + property);
             var stringOfColumns = string.Join(", ", columns);
-            
-            using (var db = _connectionFactory.GetSqlConnection)
-            {
-                var query = "SP_UpdateRecordInTable";
 
-                return db.Query<TEntity>(
-                    sql: query,
-                    param: new { P_tableName = _tableName, P_columnsString = stringOfColumns, P_Id = Id },
-                    commandType: CommandType.StoredProcedure).FirstOrDefault();
-            }
+            var result = _context.Set<TEntity>()
+                            .FromSqlRaw("SP_UpdateRecordInTable @P_tableName, @P_columnsString, @P_Id",
+                            new SqlParameter("P_tableName", _tableName),
+                            new SqlParameter("P_columnsString", stringOfColumns),
+                            new SqlParameter("P_Id", Id)
+                            ).ToList().FirstOrDefault();
+
+            _context.SaveChanges();
+
+            return result;
         }
 
         public TEntity Delete(TId Id)
         {
-            if (_isSoftDelete)
-            {
-                var columns = GetColumns();
-                var isActiveColumnUpdateString = columns.Where(e => e == "IsActive").Select(e => $"{e} = 0").FirstOrDefault();
+            var result = _context.Set<TEntity>()
+                    .FromSqlRaw("SP_DeleteRecordFromTable @P_tableName, @P_Id",
+                    new SqlParameter("P_tableName", _tableName),
+                    new SqlParameter("P_Id", Id)
+                    ).ToList().FirstOrDefault();
 
-                using (var db = _connectionFactory.GetSqlConnection)
-                {
-                    var query = "SP_UnActivateRecordStatementInTable";
+            _context.SaveChanges();
 
-                    var UnActivateStatement = db.Query<string>(
-                        sql: query,
-                        param: new { P_tableName = _tableName, P_columnsString = isActiveColumnUpdateString, P_Id = Id },
-                        commandType: CommandType.StoredProcedure).FirstOrDefault();
-
-                    return db.Query<TEntity>(
-                        sql: UnActivateStatement,
-                        param: Id,
-                        commandType: CommandType.Text).FirstOrDefault();
-                }
-            }
-            else
-            {
-                using (var db = _connectionFactory.GetSqlConnection)
-                {
-                    var query = "SP_DeleteRecordFromTable";
-                    return db.Query<TEntity>(
-                        sql: query,
-                        param: new { P_tableName = _tableName, P_Id = Id },
-                        commandType: CommandType.StoredProcedure).FirstOrDefault();
-                }
-            }
+            return result;
         }
         
         private IEnumerable<string> GetColumns()

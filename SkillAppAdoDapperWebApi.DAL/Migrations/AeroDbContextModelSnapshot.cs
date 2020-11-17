@@ -8,8 +8,8 @@ using SkillAppAdoDapperWebApi.DAL.Infrastructure;
 
 namespace SkillAppAdoDapperWebApi.DAL.Migrations
 {
-    [DbContext(typeof(AeroContext))]
-    partial class AeroContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AeroDbContext))]
+    partial class AeroDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -68,13 +68,13 @@ namespace SkillAppAdoDapperWebApi.DAL.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("ArriveTo_Id")
+                    b.Property<int?>("ArriveToId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DepartAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartFrom_Id")
+                    b.Property<int?>("DepartFromId")
                         .HasColumnType("int");
 
                     b.Property<string>("Duration")
@@ -83,10 +83,16 @@ namespace SkillAppAdoDapperWebApi.DAL.Migrations
                     b.Property<int>("Length")
                         .HasColumnType("int");
 
-                    b.Property<int>("Plane_Id")
+                    b.Property<int?>("PlaneId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArriveToId");
+
+                    b.HasIndex("DepartFromId");
+
+                    b.HasIndex("PlaneId");
 
                     b.ToTable("Flights");
                 });
@@ -101,7 +107,7 @@ namespace SkillAppAdoDapperWebApi.DAL.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Flight_Id")
+                    b.Property<int?>("FlightId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -121,7 +127,39 @@ namespace SkillAppAdoDapperWebApi.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FlightId");
+
                     b.ToTable("Passengers");
+                });
+
+            modelBuilder.Entity("SkillManagement.DataAccess.Entities.SQLEntities.SQLFlight", b =>
+                {
+                    b.HasOne("SkillManagement.DataAccess.Entities.SQLEntities.SQLAeroport", "ArriveTo")
+                        .WithMany()
+                        .HasForeignKey("ArriveToId");
+
+                    b.HasOne("SkillManagement.DataAccess.Entities.SQLEntities.SQLAeroport", "DepartFrom")
+                        .WithMany()
+                        .HasForeignKey("DepartFromId");
+
+                    b.HasOne("SkillManagement.DataAccess.Entities.SQLEntities.SQLAeroplane", "Plane")
+                        .WithMany()
+                        .HasForeignKey("PlaneId");
+
+                    b.Navigation("ArriveTo");
+
+                    b.Navigation("DepartFrom");
+
+                    b.Navigation("Plane");
+                });
+
+            modelBuilder.Entity("SkillManagement.DataAccess.Entities.SQLEntities.SQLPassenger", b =>
+                {
+                    b.HasOne("SkillManagement.DataAccess.Entities.SQLEntities.SQLFlight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId");
+
+                    b.Navigation("Flight");
                 });
 #pragma warning restore 612, 618
         }

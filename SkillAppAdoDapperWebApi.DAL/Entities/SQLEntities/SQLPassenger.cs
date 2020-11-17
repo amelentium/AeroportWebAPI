@@ -5,7 +5,7 @@ namespace SkillManagement.DataAccess.Entities.SQLEntities
     public class SQLPassenger : IEntity<int>
     {
         public int Id { get; set; }
-        public int Flight_Id { get; set; }
+        public SQLFlight Flight { get; set; }
         public string SeatNum { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
