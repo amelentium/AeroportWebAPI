@@ -10,11 +10,9 @@ namespace SkillManagement.DataAccess.Repositories
 {
     public class SQLAeroplaneRepository : GenericRepository<SQLAeroplane, int>, ISQLAeroplaneRepository
     {
-        private static readonly string _tableName = "Aeroplanes";
-        public SQLAeroplaneRepository(IConnectionFactory connectionFactory, IConfiguration config, AeroDbContext context) : base(connectionFactory, _tableName, false, context)
+        public SQLAeroplaneRepository(AeroDbContext context) : base(context)
         {
-            var connectionString = config["connectionString:EFConnection"];
-            connectionFactory.SetConnection(connectionString);
+
         }
     }
 }
