@@ -40,17 +40,16 @@ namespace SkillManagement.DataAccess.Core
 
         public TEntity Update(TEntity entity, TId Id)
         {
-            var result = _context.Set<TEntity>().Update(entity);
-
+            _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
 
-            return result.Entity;
+            return entity;
         }
 
         public TEntity Delete(TId Id)
         {
-            var result = Get(Id);
-            _context.Set<TEntity>().Remove(result);
+            var result = _context.Set<TEntity>().Find(Id);
+            _context.Remove(result);
 
             return result;
         }

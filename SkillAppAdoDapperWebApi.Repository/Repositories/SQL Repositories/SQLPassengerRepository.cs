@@ -16,14 +16,15 @@ namespace SkillManagement.DataAccess.Repositories.SQL_Repositories
 {
     public class SQLPassengerRepository : GenericRepository<SQLPassenger, int>, ISQLPassengerRepository
     {
+        private readonly AeroDbContext _context;
         public SQLPassengerRepository(AeroDbContext context) : base(context)
         {
-
+            _context = context;
         }
 
         public IEnumerable<SQLPassenger> GetAllPassengersByFlightId(int flightId)
         {
-            throw new NotImplementedException();
+            return _context.Passengers.Where(e => e.Flight.Id == flightId);
         }
     }
 }

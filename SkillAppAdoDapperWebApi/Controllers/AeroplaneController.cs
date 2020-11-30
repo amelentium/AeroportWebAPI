@@ -44,6 +44,7 @@ namespace SkillManagement.WebAPI.Controllers
         [HttpPut]
         public SQLAeroplane Put([FromBody]SQLAeroplane aeroplane, int Id)
         {
+            aeroplane.Id = Id;
             return _sqlAeroplaneService.UpdateAeroplane(aeroplane, Id);
         }
 
