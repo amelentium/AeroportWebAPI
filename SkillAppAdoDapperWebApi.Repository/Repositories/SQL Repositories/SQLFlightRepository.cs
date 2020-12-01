@@ -33,7 +33,7 @@ namespace SkillManagement.DataAccess.Repositories
             return flight;
         } 
 
-        public new List<SQLFlight> GetAll()
+        public new IEnumerable<SQLFlight> GetAll()
         {
             var result =_context.Flights
                 .Include(p => p.Plane)
@@ -42,6 +42,27 @@ namespace SkillManagement.DataAccess.Repositories
                 .ToList();
 
             return result;
+        }
+
+        public new SQLFlight Get(int Id)
+        {
+            return GetAll().FirstOrDefault(f => f.Id == Id);
+        }
+
+        public new SQLFlight Update(SQLFlight flight, int Id)
+        {
+            var existingFlight = Get(Id);
+
+            existingFlight.Plane = _context.Aeroplanes.Find(flight.Plane.Id);
+            existingFlight.ArriveTo = _context.Aeroports.Find(flight.ArriveTo.Id);
+            existingFlight.DepartFrom = _context.Aeroports.Find(flight.DepartFrom.Id);
+            existingFlight.DepartAt = flight.DepartAt;
+            existingFlight.Length = flight.Length;
+            existingFlight.Duration = flight.Duration;
+
+            _context.SaveChanges();
+
+            return existingFlight;
         }
 
         public IEnumerable<SQLFlight> GetAllFlightsByArriveId(int aeroportId)
