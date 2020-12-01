@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SkillAppAdoDapperWebApi.Infrastructure.Configurations;
 using SkillManagement.DataAccess.Entities.SQLEntities;
 using System.Linq;
 
 namespace SkillAppAdoDapperWebApi.DAL.Infrastructure
 {
-    public class AeroDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class AeroDbContext : DbContext
     {
         public AeroDbContext(DbContextOptions<AeroDbContext> options) : base(options)
         { }
@@ -16,21 +17,11 @@ namespace SkillAppAdoDapperWebApi.DAL.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SQLFlight>()
-                .HasOne(f => f.Plane)
-                .WithMany();
-
-            modelBuilder.Entity<SQLFlight>()
-                .HasOne(f => f.DepartFrom)
-                .WithMany();
-
-            modelBuilder.Entity<SQLFlight>()
-                .HasOne(f => f.ArriveTo)
-                .WithMany();
-
-            modelBuilder.Entity<SQLPassenger>()
-                .HasOne(p => p.Flight)
-                .WithMany();
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new PassengerConfiguration());
+            modelBuilder.ApplyConfiguration(new FlightConfiguration());
+            modelBuilder.ApplyConfiguration(new AeroportConfiguration());
+            modelBuilder.ApplyConfiguration(new AeroplaneConfiguration());
         }
     }
 }
