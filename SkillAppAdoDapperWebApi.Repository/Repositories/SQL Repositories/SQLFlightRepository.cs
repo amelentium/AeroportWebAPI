@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using SkillAppAdoDapperWebApi.DAL.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace SkillManagement.DataAccess.Repositories
 {
@@ -18,6 +19,29 @@ namespace SkillManagement.DataAccess.Repositories
         public SQLFlightRepository(AeroDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public new SQLFlight Add(SQLFlight flight)
+        {
+            flight.Plane = _context.Aeroplanes.Find(flight.Plane.Id);
+            flight.ArriveTo = _context.Aeroports.Find(flight.ArriveTo.Id);
+            flight.DepartFrom = _context.Aeroports.Find(flight.DepartFrom.Id);
+
+            _context.Flights.Add(flight);
+            _context.SaveChanges();
+
+            return flight;
+        } 
+
+        public new List<SQLFlight> GetAll()
+        {
+            var result =_context.Flights
+                .Include(p => p.Plane)
+                .Include(a => a.ArriveTo)
+                .Include(d => d.DepartFrom)
+                .ToList();
+
+            return result;
         }
 
         public IEnumerable<SQLFlight> GetAllFlightsByArriveId(int aeroportId)
