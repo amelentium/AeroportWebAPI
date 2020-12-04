@@ -1,78 +1,89 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkillManagement.DataAccess.Entities.SQLEntities;
-using SkillManagement.DataAccess.Interfaces;
+using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-
-namespace SkillManagement.WebAPI.Controllers
+namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
 {
     public class FlightController : ControllerBase
     {
         #region Properties
-        private readonly ISQLFlightService _sqlFlightService;
-        public FlightController(ISQLFlightService flightService)
-        {
-            _sqlFlightService = flightService;
-        }
+        private readonly IFlightService _flightService;
         #endregion
 
         #region Constructors
-        [Route("Flights")]
-        [HttpGet]
-        public IEnumerable<SQLFlight> Get()
+        public FlightController(IFlightService flightService)
         {
-            return _sqlFlightService.GetAllFlights();
+            _flightService = flightService;
         }
         #endregion
 
         #region APIs
+        [Route("Flight")]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Flight flight)
+        {
+            await _flightService.AddFlight(flight);
+            return Ok();
+        }
+        
         [Route("Flight/{Id}")]
         [HttpGet]
-        public SQLFlight Get(int Id)
+        public async Task<IActionResult> Get(int Id)
         {
-            return _sqlFlightService.GetFlightById(Id);
+            var result = await _flightService.GetFlightById(Id);
+            return Ok(result);
         }
-
-        [Route("Flight/DepartFrom/{aeroportId}")]
+        
+        [Route("Flights")]
         [HttpGet]
-        public IEnumerable<SQLFlight> GetAllFlightsByDepartId(int aeroportId)
+        public async Task<IActionResult> Get()
         {
-            return _sqlFlightService.GetAllFlightsByDepartId(aeroportId);
-        }
-
-        [Route("Flight/ArriveTo/{aeroportId}")]
-        [HttpGet]
-        public IEnumerable<SQLFlight> GetAllFlightsByArriveId(int aeroportId)
-        {
-            return _sqlFlightService.GetAllFlightsByArriveId(aeroportId);
+            var result = await _flightService.GetAllFlights();
+            return Ok(result);
         }
 
         [Route("Flight/Plane/{planeId}")]
         [HttpGet]
-        public IEnumerable<SQLFlight> GetAllFlightsByPlaneId(int planeId)
+        public async Task<IActionResult> GetAllFlightsByPlaneId(int planeId)
         {
-            return _sqlFlightService.GetAllFlightsByPlaneId(planeId);
+            var result = await _flightService.GetAllFlightsByPlaneId(planeId);
+            return Ok(result);
         }
 
-        [Route("Flight")]
-        [HttpPost]
-        public SQLFlight Post([FromBody] SQLFlight flight)
+        [Route("Flight/DepartFrom/{aeroportId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllFlightsByDepartId(int aeroportId)
         {
-            return _sqlFlightService.AddFlight(flight);
+            var result = await _flightService.GetAllFlightsByDepartId(aeroportId);
+            return Ok(result);
         }
+
+        [Route("Flight/ArriveTo/{aeroportId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllFlightsByArriveId(int aeroportId)
+        {
+            var result = await _flightService.GetAllFlightsByArriveId(aeroportId);
+            return Ok(result);
+        }
+
 
         [Route("Flight/{Id}")]
         [HttpPut]
-        public SQLFlight Put([FromBody] SQLFlight flight, int Id)
+        public async Task<IActionResult> Put([FromBody] Flight flight, int Id)
         {
-            return _sqlFlightService.UpdateFlight(flight, Id);
+            flight.Id = Id;
+            await _flightService.UpdateFlight(flight);
+            return Ok();
         }
 
         [Route("Flight/{Id}")]
         [HttpDelete]
-        public SQLFlight Delete(int Id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            return _sqlFlightService.DeleteFlight(Id);
+            await  _flightService.DeleteFlight(Id);
+            return Ok();
         }
         #endregion
     }

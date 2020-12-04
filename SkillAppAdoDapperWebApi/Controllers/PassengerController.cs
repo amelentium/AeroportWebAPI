@@ -1,65 +1,73 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkillManagement.DataAccess.Entities.SQLEntities;
-using SkillManagement.DataAccess.Interfaces.SQLInterfaces.ISQLServices;
+using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace SkillManagement.WebAPI.Controllers
+namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
 {
     public class PassengerController : ControllerBase
     {
         #region Properties
-        private readonly ISQLPassengerService _sqlPassengerService;
+        private readonly IPassengerService _passengerService;
         #endregion
 
         #region Constructors
-        public PassengerController(ISQLPassengerService sqlPassengerService)
+        public PassengerController(IPassengerService passengerService)
         {
-            _sqlPassengerService = sqlPassengerService;
+            _passengerService = passengerService;
         }
         #endregion
 
         #region APIs
+        [Route("Passenger")]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Passenger passenger)
+        {
+            await _passengerService.AddPassenger(passenger);
+            return Ok();
+        }
+
+        [Route("Passenger/{Id}")]
+        [HttpGet]
+        public async Task<IActionResult> Get(int Id)
+        {
+            var result = await _passengerService.GetPassengerById(Id);
+            return Ok(result);
+        }
+        
         [Route("Passengers")]
         [HttpGet]
-        public IEnumerable<SQLPassenger> Get()
+        public async Task<IActionResult> Get()
         {
-            return _sqlPassengerService.GetAllPassengers();
+            var result = await _passengerService.GetAllPassengers();
+            return Ok(result);
         }
 
         [Route("Passenger/ByFlight/{flightId}")]
         [HttpGet]
-        public IEnumerable<SQLPassenger> GetAllEmployeeSkillsByEmployeeId(int flightId)
+        public async Task<IActionResult> GetAllPassengersByFlightId(int flightId)
         {
-            return _sqlPassengerService.GetAllPassengersByFlightId(flightId);
-        }
-
-        [Route("Passenger/{Id}")]
-        [HttpGet]
-        public SQLPassenger Get(int Id)
-        {
-            return _sqlPassengerService.GetPassengerById(Id);
-        }
-
-        [Route("Passenger")]
-        [HttpPost]
-        public SQLPassenger Post([FromBody] SQLPassenger passenger)
-        {
-            return _sqlPassengerService.AddPassenger(passenger);
+            var result = await _passengerService.GetAllPassengersByFlightId(flightId);
+            return Ok(result);
         }
 
         [Route("Passenger/{Id}")]
         [HttpPut]
-        public SQLPassenger Put([FromBody] SQLPassenger passenger, int Id)
+        public async Task<IActionResult> Put([FromBody] Passenger passenger, int Id)
         {
-            return _sqlPassengerService.UpdatePassenger(passenger, Id);
+            passenger.Id = Id;
+            await _passengerService.UpdatePassenger(passenger);
+            return Ok();
         }
 
         [Route("Passenger/{Id}")]
         [HttpDelete]
-        public SQLPassenger Delete(int Id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            return _sqlPassengerService.DeletePassenger(Id);
+            await _passengerService.DeletePassenger(Id);
+            return Ok();
         }
         #endregion
     }
