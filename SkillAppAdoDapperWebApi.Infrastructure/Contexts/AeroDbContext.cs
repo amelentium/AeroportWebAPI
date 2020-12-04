@@ -1,19 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 using SkillAppAdoDapperWebApi.Infrastructure.Configurations;
-using SkillManagement.DataAccess.Entities.SQLEntities;
-using System.Linq;
 
-namespace SkillAppAdoDapperWebApi.DAL.Infrastructure
+namespace SkillAppAdoDapperWebApi.Infrastructure.Contexts
 {
     public class AeroDbContext : DbContext
     {
         public AeroDbContext(DbContextOptions<AeroDbContext> options) : base(options)
         { }
 
-        public DbSet<SQLAeroplane> Aeroplanes { get; set; }
-        public DbSet<SQLAeroport> Aeroports { get; set; }
-        public DbSet<SQLFlight> Flights { get; set; }
-        public DbSet<SQLPassenger> Passengers { get; set; }
+        public DbSet<Aeroplane> Aeroplanes { get; set; }
+        public DbSet<Aeroport> Aeroports { get; set; }
+        public DbSet<Flight> Flights { get; set; }
+        public DbSet<Passenger> Passengers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

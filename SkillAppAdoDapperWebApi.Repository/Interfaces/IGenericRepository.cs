@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
-using System;
-using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-namespace SkillManagement.DataAccess.Interfaces
+namespace SkillAppAdoDapperWebApi.Repository.Interfaces
 {
     public interface IGenericRepository<TEntity, TId> where TEntity : class
     {
-        IEnumerable<TEntity> GetAll();
+        Task Add(TEntity entity);
 
-        TEntity Get(TId Id);
+        Task<TEntity> Get(TId Id);
 
-        TEntity Add(TEntity entity);
+        Task<List<TEntity>> GetAll();
 
-        TEntity Update(TEntity entity, TId Id);
+        void Update(TEntity entity);
 
-        TEntity Delete(TId Id);
+        Task Delete(TId Id);
     }
 }

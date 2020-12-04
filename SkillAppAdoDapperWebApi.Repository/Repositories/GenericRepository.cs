@@ -1,13 +1,9 @@
-﻿using SkillManagement.DataAccess.Interfaces;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SkillAppAdoDapperWebApi.DAL.Infrastructure;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Linq.Expressions;
+using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
+using SkillAppAdoDapperWebApi.Repository.Interfaces;
 
 namespace SkillManagement.DataAccess.Core
 {
@@ -20,38 +16,30 @@ namespace SkillManagement.DataAccess.Core
             _context = context;
         }
 
-        public TEntity Add(TEntity entity)
+        public async Task Add(TEntity entity)
         {
-            _context.Set<TEntity>().Add(entity);
-            _context.SaveChanges();
-
-            return entity;
+            await _context.Set<TEntity>().AddAsync(entity);
         }
 
-        public TEntity Get(TId Id)
+        public async Task<TEntity> Get(TId Id)
         {
-            return _context.Set<TEntity>().Find(Id);
+            return await _context.Set<TEntity>().FindAsync(Id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<List<TEntity>> GetAll()
         {
-            return _context.Set<TEntity>().ToList();
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public TEntity Update(TEntity entity, TId Id)
+        public void Update(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            return entity;
         }
 
-        public TEntity Delete(TId Id)
+        public async Task Delete(TId Id)
         {
-            var result = _context.Set<TEntity>().Find(Id);
+            var result = await _context.Set<TEntity>().FindAsync(Id);
             _context.Remove(result);
-
-            return result;
         }
     }
 }

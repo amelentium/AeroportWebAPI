@@ -1,58 +1,64 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkillManagement.DataAccess.Entities.SQLEntities;
-using SkillManagement.DataAccess.Interfaces;
+using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace SkillManagement.WebAPI.Controllers
+namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
 {
     public class AeroplaneController : ControllerBase
     {
         #region Properties
-        private readonly ISQLAeroplaneService _sqlAeroplaneService;
+        private readonly IAeroplaneService _aeroplaneService;
         #endregion
 
         #region Constructors
-        public AeroplaneController(ISQLAeroplaneService sqlEmployeeService)
+        public AeroplaneController(IAeroplaneService aeroplaneService)
         {
-            _sqlAeroplaneService = sqlEmployeeService;
+            _aeroplaneService = aeroplaneService;
         }
         #endregion
 
         #region APIs
-        [Route("Aeroplanes")]
-        [HttpGet]
-        public IEnumerable<SQLAeroplane> Get()
+        [Route("Aeroplane")]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Aeroplane aeroplane)
         {
-            return _sqlAeroplaneService.GetAllAeroplanes();
+            await _aeroplaneService.AddAeroplane(aeroplane);
+            return Ok();
         }
 
         [Route("Aeroplane/{Id}")]
         [HttpGet]
-        public SQLAeroplane Get(int Id)
+        public async Task<IActionResult> Get(int Id)
         {
-            return _sqlAeroplaneService.GetAeroplaneById(Id);
+            var result = await _aeroplaneService.GetAeroplaneById(Id);
+            return Ok(result);
         }
 
-        [Route("Aeroplane")]
-        [HttpPost]
-        public SQLAeroplane Post([FromBody]SQLAeroplane aeroplane)
+        [Route("Aeroplanes")]
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            return _sqlAeroplaneService.AddAeroplane(aeroplane);
+            var result = await _aeroplaneService.GetAllAeroplanes();
+            return Ok(result);
         }
 
         [Route("Aeroplane/{Id}")]
         [HttpPut]
-        public SQLAeroplane Put([FromBody]SQLAeroplane aeroplane, int Id)
+        public async Task<IActionResult> Put([FromBody] Aeroplane aeroplane, int Id)
         {
             aeroplane.Id = Id;
-            return _sqlAeroplaneService.UpdateAeroplane(aeroplane, Id);
+            await _aeroplaneService.UpdateAeroplane(aeroplane);
+            return Ok();
         }
 
         [Route("Aeroplane/{Id}")]
         [HttpDelete]
-        public SQLAeroplane Delete(int Id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            return _sqlAeroplaneService.DeleteAeroplane(Id);
+            await _aeroplaneService.DeleteAeroplane(Id);
+            return Ok();
         }
         #endregion
     }

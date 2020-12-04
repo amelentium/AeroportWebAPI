@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SkillManagement.DataAccess.Entities.SQLEntities;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 
 namespace SkillAppAdoDapperWebApi.Infrastructure.Configurations
 {
-	public class FlightConfiguration : IEntityTypeConfiguration<SQLFlight>
+    public class FlightConfiguration : IEntityTypeConfiguration<Flight>
 	{
-		public void Configure(EntityTypeBuilder<SQLFlight> builder)
+		public void Configure(EntityTypeBuilder<Flight> builder)
 		{
             builder.HasOne(x => x.Plane).WithMany();
 

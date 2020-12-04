@@ -1,4 +1,4 @@
-﻿namespace SkillManagement.DataAccess.Interfaces
+﻿namespace SkillAppAdoDapperWebApi.DAL.Interfaces
 {
     public interface IEntity<T>
     {

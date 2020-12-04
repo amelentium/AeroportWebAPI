@@ -1,57 +1,64 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkillManagement.DataAccess.Entities.SQLEntities;
-using SkillManagement.DataAccess.Interfaces;
+using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace SkillManagement.WebAPI.Controllers
+namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
 {
     public class AeroportController : ControllerBase
     {
         #region Properties
-        private readonly ISQLAeroportService _sqlAeroportService;
+        private readonly IAeroportService _aeroportService;
         #endregion
 
         #region Constructors
-        public AeroportController(ISQLAeroportService aeroportService)
+        public AeroportController(IAeroportService aeroportService)
         {
-            _sqlAeroportService = aeroportService;
+            _aeroportService = aeroportService;
         }
         #endregion
 
         #region APIs
-        [Route("Aeroports")]
-        [HttpGet]
-        public IEnumerable<SQLAeroport> Get()
+        [Route("Aeroport")]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Aeroport aeroport)
         {
-            return _sqlAeroportService.GetAllAeroports();
+            await _aeroportService.AddAeroport(aeroport);
+            return Ok();
         }
 
         [Route("Aeroport/{Id}")]
         [HttpGet]
-        public SQLAeroport Get(int Id)
+        public async Task<IActionResult> Get(int Id)
         {
-            return _sqlAeroportService.GetAeroportById(Id);
+            var result = await _aeroportService.GetAeroportById(Id);
+            return Ok(result);
         }
 
-        [Route("Aeroport")]
-        [HttpPost]
-        public SQLAeroport Post([FromBody] SQLAeroport aeroport)
+        [Route("Aeroports")]
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            return _sqlAeroportService.AddAeroport(aeroport);
+            var result = await _aeroportService.GetAllAeroports();
+            return Ok(result);
         }
 
         [Route("Aeroport/{Id}")]
         [HttpPut]
-        public SQLAeroport Put([FromBody] SQLAeroport aeroport, int Id)
+        public async Task<IActionResult> Put([FromBody] Aeroport aeroport, int Id)
         {
-            return _sqlAeroportService.UpdateAeroport(aeroport, Id);
+            aeroport.Id = Id;
+            await _aeroportService.UpdateAeroport(aeroport);
+            return Ok();
         }
 
         [Route("Aeroport/{Id}")]
         [HttpDelete]
-        public SQLAeroport Delete(int Id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            return _sqlAeroportService.DeleteAeroport(Id);
+            await  _aeroportService.DeleteAeroport(Id);
+            return Ok();
         }
         #endregion
     }

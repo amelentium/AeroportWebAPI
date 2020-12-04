@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SkillManagement.DataAccess.Entities.SQLEntities;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 
 namespace SkillAppAdoDapperWebApi.Infrastructure.Configurations
 {
-	public class AeroplaneConfiguration : IEntityTypeConfiguration<SQLAeroplane>
+    public class AeroplaneConfiguration : IEntityTypeConfiguration<Aeroplane>
 	{
-		public void Configure(EntityTypeBuilder<SQLAeroplane> builder)
+		public void Configure(EntityTypeBuilder<Aeroplane> builder)
 		{
 			
 		}

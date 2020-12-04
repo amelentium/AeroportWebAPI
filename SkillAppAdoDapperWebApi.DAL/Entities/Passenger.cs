@@ -1,11 +1,11 @@
-﻿using SkillManagement.DataAccess.Interfaces;
+﻿using SkillAppAdoDapperWebApi.DAL.Interfaces;
 
-namespace SkillManagement.DataAccess.Entities.SQLEntities
+namespace SkillAppAdoDapperWebApi.DAL.Entities
 {
-    public class SQLPassenger : IEntity<int>
+    public class Passenger : IEntity<int>
     {
         public int Id { get; set; }
-        public SQLFlight Flight { get; set; }
+        public Flight Flight { get; set; }
         public string SeatNum { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }

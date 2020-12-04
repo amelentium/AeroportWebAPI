@@ -1,8 +1,8 @@
-﻿using SkillManagement.DataAccess.Interfaces;
+﻿using SkillAppAdoDapperWebApi.DAL.Interfaces;
 
-namespace SkillManagement.DataAccess.Entities.SQLEntities
+namespace SkillAppAdoDapperWebApi.DAL.Entities
 {
-    public class SQLAeroport : IEntity<int>
+    public class Aeroport : IEntity<int>
     {
         public int Id { get; set; }
         public string Country { get; set; }
