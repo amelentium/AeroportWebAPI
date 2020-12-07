@@ -14,6 +14,10 @@ using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
 using SkillAppAdoDapperWebApi.Repository.Interfaces.Repositories;
 using SkillAppAdoDapperWebApi.Repository.Interfaces;
 using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Token;
 
 namespace SkillAppAdoDapperWebApi
 {
@@ -28,6 +32,30 @@ namespace SkillAppAdoDapperWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AeroDbContext>(options => options.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = SkillAeroDB; Trusted_Connection = True;"));
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = false;
+            })
+                .AddEntityFrameworkStores<AeroDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = AeroTokenOptions.ISSUER,
+
+                        ValidateAudience = true,
+                        ValidAudience = AeroTokenOptions.AUDIENCE,
+                        ValidateLifetime = true,
+
+                        IssuerSigningKey = AeroTokenOptions.GetSymmetricSecurityKey(),
+                        ValidateIssuerSigningKey = true,
+                    };
+                });
 
             services.AddControllers();
             #region SQL repositories
@@ -42,6 +70,7 @@ namespace SkillAppAdoDapperWebApi
             services.AddTransient<IAeroportService, AeroportService>();
             services.AddTransient<IFlightService, FlightService>();
             services.AddTransient<IPassengerService, PassengerService>();
+            services.AddTransient<IUserService, UserService>();
             #endregion
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -85,10 +114,10 @@ namespace SkillAppAdoDapperWebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();
-
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");

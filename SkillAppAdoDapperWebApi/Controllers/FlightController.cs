@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Collections.Generic;
@@ -6,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
+    [Authorize(AuthenticationSchemes =
+   JwtBearerDefaults.AuthenticationScheme)]
     public class FlightController : ControllerBase
     {
         #region Properties
@@ -20,7 +26,6 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
         #endregion
 
         #region APIs
-        [Route("Flight")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Flight flight)
         {
@@ -28,15 +33,13 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok();
         }
         
-        [Route("Flight/{Id}")]
-        [HttpGet]
+        [HttpGet("{Id}")]
         public async Task<IActionResult> Get(int Id)
         {
             var result = await _flightService.GetFlightById(Id);
             return Ok(result);
         }
         
-        [Route("Flights")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -44,33 +47,29 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok(result);
         }
 
-        [Route("Flight/Plane/{planeId}")]
-        [HttpGet]
+        [HttpGet("{planeId}")]
         public async Task<IActionResult> GetAllFlightsByPlaneId(int planeId)
         {
             var result = await _flightService.GetAllFlightsByPlaneId(planeId);
             return Ok(result);
         }
 
-        [Route("Flight/DepartFrom/{aeroportId}")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllFlightsByDepartId(int aeroportId)
+        [HttpGet("{aeroportArriveId}")]
+        public async Task<IActionResult> GetAllFlightsByDepartId(int aeroportArriveId)
         {
-            var result = await _flightService.GetAllFlightsByDepartId(aeroportId);
+            var result = await _flightService.GetAllFlightsByDepartId(aeroportArriveId);
             return Ok(result);
         }
 
-        [Route("Flight/ArriveTo/{aeroportId}")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllFlightsByArriveId(int aeroportId)
+        [HttpGet("{aeroportDepartId}")]
+        public async Task<IActionResult> GetAllFlightsByArriveId(int aeroportDepartId)
         {
-            var result = await _flightService.GetAllFlightsByArriveId(aeroportId);
+            var result = await _flightService.GetAllFlightsByArriveId(aeroportDepartId);
             return Ok(result);
         }
 
 
-        [Route("Flight/{Id}")]
-        [HttpPut]
+        [HttpPut("{Id}")]
         public async Task<IActionResult> Put([FromBody] Flight flight, int Id)
         {
             flight.Id = Id;
@@ -78,8 +77,7 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok();
         }
 
-        [Route("Flight/{Id}")]
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
             await  _flightService.DeleteFlight(Id);

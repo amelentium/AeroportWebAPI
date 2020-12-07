@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Collections.Generic;
@@ -6,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
+    [Authorize(AuthenticationSchemes =
+JwtBearerDefaults.AuthenticationScheme)]
     public class AeroplaneController : ControllerBase
     {
         #region Properties
@@ -20,7 +26,6 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
         #endregion
 
         #region APIs
-        [Route("Aeroplane")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Aeroplane aeroplane)
         {
@@ -28,15 +33,13 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok();
         }
 
-        [Route("Aeroplane/{Id}")]
-        [HttpGet]
+        [HttpGet("{Id}")]
         public async Task<IActionResult> Get(int Id)
         {
             var result = await _aeroplaneService.GetAeroplaneById(Id);
             return Ok(result);
         }
 
-        [Route("Aeroplanes")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -44,8 +47,7 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok(result);
         }
 
-        [Route("Aeroplane/{Id}")]
-        [HttpPut]
+        [HttpPut("{Id}")]
         public async Task<IActionResult> Put([FromBody] Aeroplane aeroplane, int Id)
         {
             aeroplane.Id = Id;
@@ -53,8 +55,7 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok();
         }
 
-        [Route("Aeroplane/{Id}")]
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
             await _aeroplaneService.DeleteAeroplane(Id);

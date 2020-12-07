@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.DAL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.BLL", "SkillAppAdoDapperWebApi.BLL\SkillAppAdoDapperWebApi.BLL.csproj", "{F5B91188-CBAE-4EFD-915A-128A55ED3B69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillAppAdoDapperWebApi.Repository", "SkillAppAdoDapperWebApi.Repository\SkillAppAdoDapperWebApi.Repository.csproj", "{497E2BD2-9861-43E0-8DE3-160A3789D54E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.Repository", "SkillAppAdoDapperWebApi.Repository\SkillAppAdoDapperWebApi.Repository.csproj", "{497E2BD2-9861-43E0-8DE3-160A3789D54E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillAppAdoDapperWebApi.Infrastructure", "SkillAppAdoDapperWebApi.Infrastructure\SkillAppAdoDapperWebApi.Infrastructure.csproj", "{A17A3443-A506-4EF5-85E5-5E7F95F9728E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.Infrastructure", "SkillAppAdoDapperWebApi.Infrastructure\SkillAppAdoDapperWebApi.Infrastructure.csproj", "{A17A3443-A506-4EF5-85E5-5E7F95F9728E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Token", "Token\Token.csproj", "{3ACC2B6A-E812-419D-A919-B94BA7786DA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A17A3443-A506-4EF5-85E5-5E7F95F9728E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A17A3443-A506-4EF5-85E5-5E7F95F9728E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A17A3443-A506-4EF5-85E5-5E7F95F9728E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ACC2B6A-E812-419D-A919-B94BA7786DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ACC2B6A-E812-419D-A919-B94BA7786DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ACC2B6A-E812-419D-A919-B94BA7786DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ACC2B6A-E812-419D-A919-B94BA7786DA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

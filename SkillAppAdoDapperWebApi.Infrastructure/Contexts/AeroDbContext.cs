@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SkillAppAdoDapperWebApi.DAL.Entities;
 using SkillAppAdoDapperWebApi.Infrastructure.Configurations;
 
 namespace SkillAppAdoDapperWebApi.Infrastructure.Contexts
 {
-    public class AeroDbContext : DbContext
+    public class AeroDbContext : IdentityDbContext
     {
         public AeroDbContext(DbContextOptions<AeroDbContext> options) : base(options)
         { }

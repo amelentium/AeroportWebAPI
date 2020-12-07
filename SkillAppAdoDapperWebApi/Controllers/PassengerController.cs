@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using SkillAppAdoDapperWebApi.DAL.Entities;
 using System;
@@ -7,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
+    [Authorize(AuthenticationSchemes =
+   JwtBearerDefaults.AuthenticationScheme)]
     public class PassengerController : ControllerBase
     {
         #region Properties
@@ -21,7 +27,6 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
         #endregion
 
         #region APIs
-        [Route("Passenger")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Passenger passenger)
         {
@@ -29,15 +34,13 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok();
         }
 
-        [Route("Passenger/{Id}")]
-        [HttpGet]
+        [HttpGet("{Id}")]
         public async Task<IActionResult> Get(int Id)
         {
             var result = await _passengerService.GetPassengerById(Id);
             return Ok(result);
         }
         
-        [Route("Passengers")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -45,16 +48,14 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok(result);
         }
 
-        [Route("Passenger/ByFlight/{flightId}")]
-        [HttpGet]
+        [HttpGet("{flightId}")]
         public async Task<IActionResult> GetAllPassengersByFlightId(int flightId)
         {
             var result = await _passengerService.GetAllPassengersByFlightId(flightId);
             return Ok(result);
         }
 
-        [Route("Passenger/{Id}")]
-        [HttpPut]
+        [HttpPut("{Id}")]
         public async Task<IActionResult> Put([FromBody] Passenger passenger, int Id)
         {
             passenger.Id = Id;
@@ -62,8 +63,7 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
             return Ok();
         }
 
-        [Route("Passenger/{Id}")]
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
             await _passengerService.DeletePassenger(Id);
