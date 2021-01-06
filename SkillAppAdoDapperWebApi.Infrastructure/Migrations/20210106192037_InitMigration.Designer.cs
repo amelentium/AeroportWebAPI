@@ -10,7 +10,7 @@ using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
 namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
 {
     [DbContext(typeof(AeroDbContext))]
-    [Migration("20201206194318_InitMigration")]
+    [Migration("20210106192037_InitMigration")]
     partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -224,6 +224,9 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("AirlineId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -234,6 +237,8 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AirlineId");
 
                     b.ToTable("Aeroplanes");
                 });
@@ -259,6 +264,52 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                     b.ToTable("Aeroports");
                 });
 
+            modelBuilder.Entity("SkillAppAdoDapperWebApi.DAL.Entities.Airline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Airlines");
+                });
+
+            modelBuilder.Entity("SkillAppAdoDapperWebApi.DAL.Entities.CompanyPlane", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Mark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PlaneId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("PlaneId");
+
+                    b.ToTable("CompanyPlanes");
+                });
+
             modelBuilder.Entity("SkillAppAdoDapperWebApi.DAL.Entities.Flight", b =>
                 {
                     b.Property<int>("Id")
@@ -268,6 +319,9 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
 
                     b.Property<int?>("ArriveToId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DepartAt")
                         .HasColumnType("datetime2");
@@ -381,6 +435,29 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SkillAppAdoDapperWebApi.DAL.Entities.Aeroplane", b =>
+                {
+                    b.HasOne("SkillAppAdoDapperWebApi.DAL.Entities.Airline", null)
+                        .WithMany("Aeroplanes")
+                        .HasForeignKey("AirlineId")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("SkillAppAdoDapperWebApi.DAL.Entities.CompanyPlane", b =>
+                {
+                    b.HasOne("SkillAppAdoDapperWebApi.DAL.Entities.Airline", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("SkillAppAdoDapperWebApi.DAL.Entities.Aeroplane", "Plane")
+                        .WithMany()
+                        .HasForeignKey("PlaneId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Plane");
+                });
+
             modelBuilder.Entity("SkillAppAdoDapperWebApi.DAL.Entities.Flight", b =>
                 {
                     b.HasOne("SkillAppAdoDapperWebApi.DAL.Entities.Aeroport", "ArriveTo")
@@ -391,7 +468,7 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DepartFromId");
 
-                    b.HasOne("SkillAppAdoDapperWebApi.DAL.Entities.Aeroplane", "Plane")
+                    b.HasOne("SkillAppAdoDapperWebApi.DAL.Entities.CompanyPlane", "Plane")
                         .WithMany()
                         .HasForeignKey("PlaneId");
 
@@ -409,6 +486,11 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                         .HasForeignKey("FlightId");
 
                     b.Navigation("Flight");
+                });
+
+            modelBuilder.Entity("SkillAppAdoDapperWebApi.DAL.Entities.Airline", b =>
+                {
+                    b.Navigation("Aeroplanes");
                 });
 #pragma warning restore 612, 618
         }

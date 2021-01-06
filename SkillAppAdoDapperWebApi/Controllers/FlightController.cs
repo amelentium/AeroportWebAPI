@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using SkillAppAdoDapperWebApi.DAL.Entities;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers

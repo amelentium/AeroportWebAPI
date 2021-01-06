@@ -1,4 +1,5 @@
-﻿using SkillAppAdoDapperWebApi.DAL.Entities;
+﻿using FluentValidation.Results;
+using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,5 +16,7 @@ namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
         Task UpdateAeroport(Aeroport aeroport);
 
         Task DeleteAeroport(int Id);
+
+        ValidationResult AeroportValidation(Aeroport aeroport);
     }
 }

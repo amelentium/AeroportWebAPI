@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using SkillAppAdoDapperWebApi.DAL.Entities;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
@@ -12,58 +10,54 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes =
-        JwtBearerDefaults.AuthenticationScheme)]
-    public class AeroportController : ControllerBase
+   JwtBearerDefaults.AuthenticationScheme)]
+    public class AirlineController : ControllerBase
     {
         #region Properties
-        private readonly IAeroportService _aeroportService;
+        private readonly IAirlineService _airlineService;
         #endregion
 
         #region Constructors
-        public AeroportController(IAeroportService aeroportService)
+        public AirlineController(IAirlineService airlineService)
         {
-            _aeroportService = aeroportService;
+            _airlineService = airlineService;
         }
         #endregion
 
         #region APIs
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Aeroport aeroport)
+        public async Task<IActionResult> Post([FromBody] Airline airline)
         {
-            var result = _aeroportService.AeroportValidation(aeroport);
-            if (!result.IsValid)
-                return BadRequest(result.Errors.Select(x => new { Error = x.ErrorMessage, Code = x.ErrorCode }).ToList());
-
-            await _aeroportService.AddAeroport(aeroport);
+            await _airlineService.AddAirline(airline);
             return Ok();
         }
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get(int Id)
         {
-            var result = await _aeroportService.GetAeroportById(Id);
+            var result = await _airlineService.GetAirlineById(Id);
             return Ok(result);
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await _aeroportService.GetAllAeroports();
+            var result = await _airlineService.GetAllAirlines();
             return Ok(result);
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> Put([FromBody] Aeroport aeroport, int Id)
+        public async Task<IActionResult> Put([FromBody] Airline airline, int Id)
         {
-            aeroport.Id = Id;
-            await _aeroportService.UpdateAeroport(aeroport);
+            airline.Id = Id;
+            await _airlineService.UpdateAirline(airline);
             return Ok();
         }
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
-            await  _aeroportService.DeleteAeroport(Id);
+            await _airlineService.DeleteAirline(Id);
             return Ok();
         }
         #endregion

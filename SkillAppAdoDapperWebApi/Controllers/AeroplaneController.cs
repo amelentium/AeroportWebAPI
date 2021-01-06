@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
@@ -11,7 +12,7 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes =
-JwtBearerDefaults.AuthenticationScheme)]
+        JwtBearerDefaults.AuthenticationScheme)]
     public class AeroplaneController : ControllerBase
     {
         #region Properties
@@ -29,6 +30,10 @@ JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Aeroplane aeroplane)
         {
+            var result = _aeroplaneService.AeroplaneValidation(aeroplane);
+            if (!result.IsValid)
+                return BadRequest(result.Errors.Select(x => new { Error = x.ErrorMessage, Code = x.ErrorCode }).ToList());
+                
             await _aeroplaneService.AddAeroplane(aeroplane);
             return Ok();
         }

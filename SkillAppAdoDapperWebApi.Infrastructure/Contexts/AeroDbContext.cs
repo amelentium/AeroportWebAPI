@@ -12,14 +12,18 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Contexts
 
         public DbSet<Aeroplane> Aeroplanes { get; set; }
         public DbSet<Aeroport> Aeroports { get; set; }
+        public DbSet<Airline> Airlines { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<CompanyPlane> CompanyPlanes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new CompanyPlaneConfiguration());            
             modelBuilder.ApplyConfiguration(new PassengerConfiguration());
             modelBuilder.ApplyConfiguration(new FlightConfiguration());
+            modelBuilder.ApplyConfiguration(new AirlineConfiguration());
             modelBuilder.ApplyConfiguration(new AeroportConfiguration());
             modelBuilder.ApplyConfiguration(new AeroplaneConfiguration());
         }

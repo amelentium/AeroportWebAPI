@@ -8,7 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SkillManagement.DataAccess.Repositories.SQL_Repositories
+namespace SkillManagement.DataAccess.Repositories
 {
     public class PassengerRepository : GenericRepository<Passenger, int>, IPassengerRepository
     {

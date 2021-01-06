@@ -19,7 +19,7 @@ namespace SkillManagement.DataAccess.Repositories
 
         public new async Task Add(Flight flight)
         {
-            flight.Plane = await _context.Aeroplanes.FindAsync(flight.Plane.Id);
+            flight.Plane = await _context.CompanyPlanes.FindAsync(flight.Plane.Id);
             flight.ArriveTo = await _context.Aeroports.FindAsync(flight.ArriveTo.Id);
             flight.DepartFrom = await _context.Aeroports.FindAsync(flight.DepartFrom.Id);
 
@@ -36,6 +36,8 @@ namespace SkillManagement.DataAccess.Repositories
         {
             var result = await _context.Flights
                 .Include(p => p.Plane)
+                .Include(pc => pc.Plane.Company)
+                .Include(pp => pp.Plane.Plane)
                 .Include(a => a.ArriveTo)
                 .Include(d => d.DepartFrom)
                 .ToListAsync();
@@ -65,7 +67,7 @@ namespace SkillManagement.DataAccess.Repositories
         {
             var existingFlight = await Get(flight.Id);
 
-            existingFlight.Plane = await _context.Aeroplanes.FindAsync(flight.Plane.Id);
+            existingFlight.Plane = await _context.CompanyPlanes.FindAsync(flight.Plane.Id);
             existingFlight.ArriveTo = await _context.Aeroports.FindAsync(flight.ArriveTo.Id);
             existingFlight.DepartFrom = await _context.Aeroports.FindAsync(flight.DepartFrom.Id);
             existingFlight.DepartAt = flight.DepartAt;

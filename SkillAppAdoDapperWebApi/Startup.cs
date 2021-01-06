@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SkillManagement.DataAccess.Repositories;
-using SkillManagement.DataAccess.Repositories.SQL_Repositories;
 using SkillManagement.DataAccess.sqlunitOfWork;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
@@ -18,6 +17,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Token;
+using FluentValidation;
+using SkillAppAdoDapperWebApi.DAL.Entities;
+using Validators;
 
 namespace SkillAppAdoDapperWebApi
 {
@@ -58,19 +60,29 @@ namespace SkillAppAdoDapperWebApi
                 });
 
             services.AddControllers();
+
             #region SQL repositories
             services.AddTransient<IAeroplaneRepository, AeroplaneRepository>();
             services.AddTransient<IAeroportRepository, AeroportRepository>();
+            services.AddTransient<IAirlineRepository, AirlineRepository>();
             services.AddTransient<IFlightRepository, FlightRepository>();
             services.AddTransient<IPassengerRepository, PassengerRepository>();
+            services.AddTransient<ICompanyPlaneRepository, CompanyPlaneRepository>();
             #endregion
 
             #region SQL services
             services.AddTransient<IAeroplaneService, AeroplaneService>();
             services.AddTransient<IAeroportService, AeroportService>();
+            services.AddTransient<IAirlineService, AirlineService>();
             services.AddTransient<IFlightService, FlightService>();
             services.AddTransient<IPassengerService, PassengerService>();
+            services.AddTransient<ICompanyPlaneService, CompanyPlaneService>();
             services.AddTransient<IUserService, UserService>();
+            #endregion
+
+            #region Models validators
+            services.AddTransient<IValidator<Aeroplane>, AeroplaneValidator>();
+            services.AddTransient<IValidator<Aeroport>, AeroportValidator>();
             #endregion
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();

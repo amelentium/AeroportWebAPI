@@ -7,8 +7,10 @@ namespace SkillAppAdoDapperWebApi.Repository.Interfaces
     {
         IAeroplaneRepository AeroplaneRepository { get; }
         IAeroportRepository AeroportRepository { get; }
+        IAirlineRepository AirlineRepository { get; }
         IFlightRepository FlightRepository { get; }
         IPassengerRepository PassengerRepository { get; }
+        ICompanyPlaneRepository CompanyPlaneRepository { get; }
         Task Complete();
     }
 }
