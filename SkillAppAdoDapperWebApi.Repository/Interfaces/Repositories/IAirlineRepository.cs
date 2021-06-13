@@ -2,8 +2,7 @@
 
 namespace AeroportWebApi.Repository.Interfaces.Repositories
 {
-    public interface IAeroportRepository : IGenericRepository<Aeroport, int>
+    public interface IAirlineRepository : IGenericRepository<Airline, int>
     {
-
     }
 }

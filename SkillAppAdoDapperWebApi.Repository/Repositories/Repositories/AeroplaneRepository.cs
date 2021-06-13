@@ -1,9 +1,8 @@
-﻿using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
-using SkillAppAdoDapperWebApi.Repository.Interfaces.Repositories;
-using SkillManagement.DataAccess.Core;
+﻿using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Infrastructure.Contexts;
+using AeroportWebApi.Repository.Interfaces.Repositories;
 
-namespace SkillManagement.DataAccess.Repositories
+namespace AeroportWebApi.Repository.Repositories.Repositories
 {
     public class AeroplaneRepository : GenericRepository<Aeroplane, int>, IAeroplaneRepository
     {

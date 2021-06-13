@@ -1,4 +1,4 @@
-﻿namespace SkillAppAdoDapperWebApi.DAL.Interfaces
+﻿namespace AeroportWebApi.DAL.Interfaces
 {
     public interface IEntity<T>
     {

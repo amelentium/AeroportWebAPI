@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
+namespace AeroportWebApi.BLL.Interfaces.Services
 {
     public interface IUserService
     {

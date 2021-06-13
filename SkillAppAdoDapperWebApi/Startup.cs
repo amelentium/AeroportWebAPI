@@ -1,25 +1,27 @@
-using System.Collections.Generic;
+using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.BLL.Services;
+using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Infrastructure.Contexts;
+using AeroportWebApi.Repository.Interfaces;
+using AeroportWebApi.Repository.Interfaces.Repositories;
+using AeroportWebApi.Repository.Repositories.Repositories;
+using AeroportWebApi.Repository.UnitOfWork;
+using AeroportWebApi.Token;
+using AeroportWebApi.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using SkillManagement.DataAccess.Repositories;
-using SkillManagement.DataAccess.Repositories.SQL_Repositories;
-using SkillManagement.DataAccess.sqlunitOfWork;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-using SkillAppAdoDapperWebApi.BLL.Services;
-using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
-using SkillAppAdoDapperWebApi.Repository.Interfaces.Repositories;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
-using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Token;
+using System.Collections.Generic;
 
-namespace SkillAppAdoDapperWebApi
+namespace AeroportWebApi.WEBAPI
 {
     public class Startup
     {
@@ -58,24 +60,36 @@ namespace SkillAppAdoDapperWebApi
                 });
 
             services.AddControllers();
-            #region SQL repositories
+
+            #region Repositories
             services.AddTransient<IAeroplaneRepository, AeroplaneRepository>();
             services.AddTransient<IAeroportRepository, AeroportRepository>();
+            services.AddTransient<IAirlineRepository, AirlineRepository>();
             services.AddTransient<IFlightRepository, FlightRepository>();
             services.AddTransient<IPassengerRepository, PassengerRepository>();
+            services.AddTransient<ICompanyPlaneRepository, CompanyPlaneRepository>();
             #endregion
 
-            #region SQL services
+            #region Services
             services.AddTransient<IAeroplaneService, AeroplaneService>();
             services.AddTransient<IAeroportService, AeroportService>();
+            services.AddTransient<IAirlineService, AirlineService>();
             services.AddTransient<IFlightService, FlightService>();
             services.AddTransient<IPassengerService, PassengerService>();
+            services.AddTransient<ICompanyPlaneService, CompanyPlaneService>();
             services.AddTransient<IUserService, UserService>();
+            #endregion
+
+            #region Validators
+            services.AddTransient<IValidator<Aeroplane>, AeroplaneValidator>();
+            services.AddTransient<IValidator<Aeroport>, AeroportValidator>();
+            services.AddTransient<IValidator<Airline>, AirlineValidator>();
+            services.AddTransient<IValidator<Flight>, FlightValidator>();
             #endregion
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddSingleton<IConfiguration>(_Configuration);
+            services.AddSingleton(_Configuration);
 
             services.AddSwaggerGen(c =>
             {

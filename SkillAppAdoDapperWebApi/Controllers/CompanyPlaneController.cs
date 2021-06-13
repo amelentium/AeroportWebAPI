@@ -11,60 +11,53 @@ namespace AeroportWebApi.WEBAPI.Controllers
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes =
    JwtBearerDefaults.AuthenticationScheme)]
-    public class PassengerController : ControllerBase
+    public class CompanyPlaneController : ControllerBase
     {
         #region Properties
-        private readonly IPassengerService _passengerService;
+        private readonly ICompanyPlaneService _companyPlaneService;
         #endregion
 
         #region Constructors
-        public PassengerController(IPassengerService passengerService)
+        public CompanyPlaneController(ICompanyPlaneService companyPlaneService)
         {
-            _passengerService = passengerService;
+            _companyPlaneService = companyPlaneService;
         }
         #endregion
 
         #region APIs
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Passenger passenger)
+        public async Task<IActionResult> Post([FromBody] CompanyPlane plane)
         {
-            await _passengerService.AddPassenger(passenger);
+            await _companyPlaneService.AddCompanyPlane(plane);
             return Ok();
         }
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get(int Id)
         {
-            var result = await _passengerService.GetPassengerById(Id);
-            return Ok(result);
-        }
-        
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var result = await _passengerService.GetAllPassengers();
+            var result = await _companyPlaneService.GeCompanyPlaneById(Id);
             return Ok(result);
         }
 
-        [HttpGet("{flightId}")]
-        public async Task<IActionResult> GetAllPassengersByFlightId(int flightId)
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var result = await _passengerService.GetAllPassengersByFlightId(flightId);
+            var result = await _companyPlaneService.GetAllCompanyplanes();
             return Ok(result);
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> Put([FromBody] Passenger passenger, int Id)
+        public async Task<IActionResult> Put([FromBody] CompanyPlane plane, int Id)
         {
-            passenger.Id = Id;
-            await _passengerService.UpdatePassenger(passenger);
+            plane.Id = Id;
+            await _companyPlaneService.UpdateCompanyPlane(plane);
             return Ok();
         }
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
-            await _passengerService.DeletePassenger(Id);
+            await _companyPlaneService.DeleteCompanyPlane(Id);
             return Ok();
         }
         #endregion

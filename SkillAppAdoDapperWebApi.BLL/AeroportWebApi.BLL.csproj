@@ -5,14 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="9.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SkillAppAdoDapperWebApi.DAL\SkillAppAdoDapperWebApi.DAL.csproj" />
-    <ProjectReference Include="..\SkillAppAdoDapperWebApi.Repository\SkillAppAdoDapperWebApi.Repository.csproj" />
-    <ProjectReference Include="..\Token\Token.csproj" />
+    <ProjectReference Include="..\SkillAppAdoDapperWebApi.DAL\AeroportWebApi.DAL.csproj" />
+    <ProjectReference Include="..\SkillAppAdoDapperWebApi.Repository\AeroportWebApi.Repository.csproj" />
+    <ProjectReference Include="..\Token\AeroportWebApi.Token.csproj" />
   </ItemGroup>
 
 </Project>

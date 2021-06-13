@@ -1,17 +1,21 @@
-﻿using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Repository.Interfaces;
+using FluentValidation;
+using FluentValidation.Results;
 
-namespace SkillAppAdoDapperWebApi.BLL.Services
+namespace AeroportWebApi.BLL.Services
 {
     public class AeroportService : IAeroportService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public AeroportService(IUnitOfWork unitOfWork)
+        private readonly IValidator<Aeroport> _validator;
+        public AeroportService(IUnitOfWork unitOfWork, IValidator<Aeroport> validator)
         {
             _unitOfWork = unitOfWork;
+            _validator = validator;
         }
         public async Task AddAeroport(Aeroport aeroport)
         {
@@ -44,6 +48,16 @@ namespace SkillAppAdoDapperWebApi.BLL.Services
         async Task Complete()
         {
             await _unitOfWork.Complete();
+        }
+
+        public async Task<bool> IsAeroportExist(Aeroport aeroport)
+        {
+            return await _unitOfWork.AeroportRepository.IsExist(aeroport);
+        }
+
+        public ValidationResult AeroportValidation(Aeroport aeroport)
+        {
+            return _validator.Validate(aeroport);
         }
     }
 }

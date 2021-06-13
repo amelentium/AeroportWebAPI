@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using Token;
+using AeroportWebApi.Token;
+using AeroportWebApi.BLL.Interfaces.Services;
 
-namespace SkillAppAdoDapperWebApi.BLL.Services
+namespace AeroportWebApi.BLL.Services
 {
     public class UserService : IUserService
     {

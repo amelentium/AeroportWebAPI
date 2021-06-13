@@ -1,8 +1,8 @@
-﻿using SkillAppAdoDapperWebApi.DAL.Entities;
+﻿using AeroportWebApi.DAL.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
+namespace AeroportWebApi.BLL.Interfaces.Services
 {
     public interface IPassengerService
     {
@@ -15,6 +15,8 @@ namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
         Task<List<Passenger>> GetAllPassengersByFlightId(int flightId);
 
         Task UpdatePassenger(Passenger passenger);
+
+        Task<bool> IsPassengerExist(Passenger passenger);
 
         Task DeletePassenger(int Id);
     }

@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AeroportWebApi.BLL.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
+namespace AeroportWebApi.WEBAPI.Controllers
 {
     public class UserController : ControllerBase
     {

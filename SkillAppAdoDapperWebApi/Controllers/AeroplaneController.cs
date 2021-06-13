@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.DAL.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
+namespace AeroportWebApi.WEBAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes =
-JwtBearerDefaults.AuthenticationScheme)]
+        JwtBearerDefaults.AuthenticationScheme)]
     public class AeroplaneController : ControllerBase
     {
         #region Properties
@@ -29,6 +29,10 @@ JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Aeroplane aeroplane)
         {
+            var result = _aeroplaneService.AeroplaneValidation(aeroplane);
+            if (!result.IsValid)
+                return BadRequest(result.Errors.Select(x => x.ErrorMessage).ToList());
+                
             await _aeroplaneService.AddAeroplane(aeroplane);
             return Ok();
         }

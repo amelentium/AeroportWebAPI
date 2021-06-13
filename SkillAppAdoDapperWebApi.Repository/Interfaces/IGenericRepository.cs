@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.Repository.Interfaces
+namespace AeroportWebApi.Repository.Interfaces
 {
     public interface IGenericRepository<TEntity, TId> where TEntity : class
     {
@@ -14,5 +14,7 @@ namespace SkillAppAdoDapperWebApi.Repository.Interfaces
         void Update(TEntity entity);
 
         Task Delete(TId Id);
+
+        Task<bool> IsExist(TEntity entity);
     }
 }

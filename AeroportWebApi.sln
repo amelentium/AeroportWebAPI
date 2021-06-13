@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.WEBAPI", "SkillAppAdoDapperWebApi\SkillAppAdoDapperWebApi.WEBAPI.csproj", "{0AD9516D-9729-41D5-B8FE-D31A024E3A81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeroportWebApi.WEBAPI", "SkillAppAdoDapperWebApi\AeroportWebApi.WEBAPI.csproj", "{0AD9516D-9729-41D5-B8FE-D31A024E3A81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.DAL", "SkillAppAdoDapperWebApi.DAL\SkillAppAdoDapperWebApi.DAL.csproj", "{2297F345-FC2C-4ACD-A64E-59645510B50A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeroportWebApi.DAL", "SkillAppAdoDapperWebApi.DAL\AeroportWebApi.DAL.csproj", "{2297F345-FC2C-4ACD-A64E-59645510B50A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.BLL", "SkillAppAdoDapperWebApi.BLL\SkillAppAdoDapperWebApi.BLL.csproj", "{F5B91188-CBAE-4EFD-915A-128A55ED3B69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeroportWebApi.BLL", "SkillAppAdoDapperWebApi.BLL\AeroportWebApi.BLL.csproj", "{F5B91188-CBAE-4EFD-915A-128A55ED3B69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.Repository", "SkillAppAdoDapperWebApi.Repository\SkillAppAdoDapperWebApi.Repository.csproj", "{497E2BD2-9861-43E0-8DE3-160A3789D54E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeroportWebApi.Repository", "SkillAppAdoDapperWebApi.Repository\AeroportWebApi.Repository.csproj", "{497E2BD2-9861-43E0-8DE3-160A3789D54E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillAppAdoDapperWebApi.Infrastructure", "SkillAppAdoDapperWebApi.Infrastructure\SkillAppAdoDapperWebApi.Infrastructure.csproj", "{A17A3443-A506-4EF5-85E5-5E7F95F9728E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeroportWebApi.Infrastructure", "SkillAppAdoDapperWebApi.Infrastructure\AeroportWebApi.Infrastructure.csproj", "{A17A3443-A506-4EF5-85E5-5E7F95F9728E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Token", "Token\Token.csproj", "{3ACC2B6A-E812-419D-A919-B94BA7786DA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeroportWebApi.Token", "Token\AeroportWebApi.Token.csproj", "{3ACC2B6A-E812-419D-A919-B94BA7786DA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AeroportWebApi.Validators", "Validators\AeroportWebApi.Validators.csproj", "{BEE444EB-652A-49F1-A4DA-5687399A8E40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3ACC2B6A-E812-419D-A919-B94BA7786DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ACC2B6A-E812-419D-A919-B94BA7786DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ACC2B6A-E812-419D-A919-B94BA7786DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEE444EB-652A-49F1-A4DA-5687399A8E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEE444EB-652A-49F1-A4DA-5687399A8E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEE444EB-652A-49F1-A4DA-5687399A8E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEE444EB-652A-49F1-A4DA-5687399A8E40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

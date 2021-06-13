@@ -8,21 +8,6 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Aeroplanes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Seats = table.Column<int>(type: "int", nullable: true),
-                    Valocity = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Aeroplanes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Aeroports",
                 columns: table => new
                 {
@@ -35,6 +20,21 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Aeroports", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Airlines",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Airlines", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,39 +77,25 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Flights",
+                name: "Aeroplanes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlaneId = table.Column<int>(type: "int", nullable: true),
-                    DepartFromId = table.Column<int>(type: "int", nullable: true),
-                    ArriveToId = table.Column<int>(type: "int", nullable: true),
-                    DepartAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Length = table.Column<int>(type: "int", nullable: true),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Seats = table.Column<int>(type: "int", nullable: true),
+                    Valocity = table.Column<int>(type: "int", nullable: true),
+                    AirlineId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Flights", x => x.Id);
+                    table.PrimaryKey("PK_Aeroplanes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Flights_Aeroplanes_PlaneId",
-                        column: x => x.PlaneId,
-                        principalTable: "Aeroplanes",
+                        name: "FK_Aeroplanes_Airlines_AirlineId",
+                        column: x => x.AirlineId,
+                        principalTable: "Airlines",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Flights_Aeroports_ArriveToId",
-                        column: x => x.ArriveToId,
-                        principalTable: "Aeroports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Flights_Aeroports_DepartFromId",
-                        column: x => x.DepartFromId,
-                        principalTable: "Aeroports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,6 +205,70 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CompanyPlanes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyId = table.Column<int>(type: "int", nullable: true),
+                    PlaneId = table.Column<int>(type: "int", nullable: true),
+                    Mark = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyPlanes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CompanyPlanes_Aeroplanes_PlaneId",
+                        column: x => x.PlaneId,
+                        principalTable: "Aeroplanes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CompanyPlanes_Airlines_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Airlines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Flights",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlaneId = table.Column<int>(type: "int", nullable: true),
+                    DepartFromId = table.Column<int>(type: "int", nullable: true),
+                    ArriveToId = table.Column<int>(type: "int", nullable: true),
+                    DepartAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Length = table.Column<int>(type: "int", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Flights", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Flights_Aeroports_ArriveToId",
+                        column: x => x.ArriveToId,
+                        principalTable: "Aeroports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Flights_Aeroports_DepartFromId",
+                        column: x => x.DepartFromId,
+                        principalTable: "Aeroports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Flights_CompanyPlanes_PlaneId",
+                        column: x => x.PlaneId,
+                        principalTable: "CompanyPlanes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Passengers",
                 columns: table => new
                 {
@@ -242,6 +292,11 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Aeroplanes_AirlineId",
+                table: "Aeroplanes",
+                column: "AirlineId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -281,6 +336,16 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompanyPlanes_CompanyId",
+                table: "CompanyPlanes",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompanyPlanes_PlaneId",
+                table: "CompanyPlanes",
+                column: "PlaneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Flights_ArriveToId",
@@ -333,10 +398,16 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Migrations
                 name: "Flights");
 
             migrationBuilder.DropTable(
+                name: "Aeroports");
+
+            migrationBuilder.DropTable(
+                name: "CompanyPlanes");
+
+            migrationBuilder.DropTable(
                 name: "Aeroplanes");
 
             migrationBuilder.DropTable(
-                name: "Aeroports");
+                name: "Airlines");
         }
     }
 }
