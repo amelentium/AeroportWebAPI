@@ -1,9 +1,9 @@
-﻿using FluentValidation.Results;
-using SkillAppAdoDapperWebApi.DAL.Entities;
+﻿using AeroportWebApi.DAL.Entities;
+using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
+namespace AeroportWebApi.BLL.Interfaces.Services
 {
     public interface IAeroplaneService
     {
@@ -16,6 +16,8 @@ namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
         Task UpdateAeroplane(Aeroplane aeroplane);
 
         Task DeleteAeroplane(int Id);
+
+        Task<bool> IsAeroplaneExist(Aeroplane aeroplane);
 
         ValidationResult AeroplaneValidation(Aeroplane aeroplane);
     }

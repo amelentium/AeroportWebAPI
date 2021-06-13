@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Repository.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
-using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
 
-namespace SkillAppAdoDapperWebApi.BLL.Services
+namespace AeroportWebApi.BLL.Services
 {
     public class AeroplaneService : IAeroplaneService
     {
@@ -49,6 +49,11 @@ namespace SkillAppAdoDapperWebApi.BLL.Services
         async Task Complete()
         {
             await _unitOfWork.Complete();
+        }
+
+        public async Task<bool> IsAeroplaneExist(Aeroplane aeroplane)
+        {
+            return await _unitOfWork.AeroplaneRepository.IsExist(aeroplane);
         }
 
         public ValidationResult AeroplaneValidation(Aeroplane aeroplane)

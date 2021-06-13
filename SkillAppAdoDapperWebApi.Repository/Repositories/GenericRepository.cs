@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using AeroportWebApi.Infrastructure.Contexts;
+using AeroportWebApi.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
 
-namespace SkillManagement.DataAccess.Core
+namespace AeroportWebApi.Repository.Repositories
 {
     public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> where TEntity : class
     {
-        private readonly AeroDbContext _context;
+        protected readonly AeroDbContext _context;
 
         public GenericRepository(AeroDbContext context)
         {
@@ -40,6 +39,11 @@ namespace SkillManagement.DataAccess.Core
         {
             var result = await _context.Set<TEntity>().FindAsync(Id);
             _context.Remove(result);
+        }
+
+        public async Task<bool> IsExist(TEntity entity)
+        {
+            return await _context.Set<TEntity>().ContainsAsync(entity);
         }
     }
 }

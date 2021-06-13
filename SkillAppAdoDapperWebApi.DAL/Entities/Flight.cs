@@ -1,7 +1,7 @@
 ﻿using System;
-using SkillAppAdoDapperWebApi.DAL.Interfaces;
+using AeroportWebApi.DAL.Interfaces;
 
-namespace SkillAppAdoDapperWebApi.DAL.Entities
+namespace AeroportWebApi.DAL.Entities
 {
     public class Flight : IEntity<int>
     {

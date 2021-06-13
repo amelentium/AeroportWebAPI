@@ -1,9 +1,9 @@
-﻿using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
-using SkillAppAdoDapperWebApi.Repository.Interfaces.Repositories;
+﻿using AeroportWebApi.Infrastructure.Contexts;
+using AeroportWebApi.Repository.Interfaces;
+using AeroportWebApi.Repository.Interfaces.Repositories;
 using System.Threading.Tasks;
 
-namespace SkillManagement.DataAccess.sqlunitOfWork
+namespace AeroportWebApi.Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -14,7 +14,7 @@ namespace SkillManagement.DataAccess.sqlunitOfWork
         private readonly IPassengerRepository _passengerRepository;
         private readonly ICompanyPlaneRepository _companyPlaneRepository;
         private readonly AeroDbContext _context;
-        
+
         public UnitOfWork(IAeroplaneRepository aeroplaneRepository,
             IAeroportRepository aeroportRepository,
             IFlightRepository flightRepository,

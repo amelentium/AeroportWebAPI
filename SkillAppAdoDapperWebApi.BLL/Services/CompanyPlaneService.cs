@@ -1,12 +1,10 @@
-﻿using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
-using System;
+﻿using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.Repository.Interfaces;
+using AeroportWebApi.DAL.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.BLL.Services
+namespace AeroportWebApi.BLL.Services
 {
     public class CompanyPlaneService : ICompanyPlaneService
     {
@@ -27,9 +25,19 @@ namespace SkillAppAdoDapperWebApi.BLL.Services
             return await _unitOfWork.CompanyPlaneRepository.Get(Id);
         }
 
-        public async Task<List<CompanyPlane>> GetAllCompanyPlane()
+        public async Task<List<CompanyPlane>> GetAllCompanyplanes()
         {
             return await _unitOfWork.CompanyPlaneRepository.GetAll();
+        }
+
+        public async Task<List<CompanyPlane>> GetAllCompanyplanesByCompanyId(int companyId)
+        {
+            return await _unitOfWork.CompanyPlaneRepository.GetAllCompanyplanesByCompanyId(companyId);
+        }
+
+        public async Task<List<CompanyPlane>> GetAllCompanyplanesByPlaneId(int planeId)
+        {
+            return await _unitOfWork.CompanyPlaneRepository.GetAllCompanyplanesByPlaneId(planeId);
         }
 
         public async Task UpdateCompanyPlane(CompanyPlane plane)
@@ -42,6 +50,11 @@ namespace SkillAppAdoDapperWebApi.BLL.Services
         {
             await _unitOfWork.CompanyPlaneRepository.Delete(Id);
             await Complete();
+        }
+
+        public async Task<bool> IsCompanyPlaneExist(CompanyPlane plane)
+        {
+            return await _unitOfWork.CompanyPlaneRepository.IsExist(plane);
         }
 
         async Task Complete()

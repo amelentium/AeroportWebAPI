@@ -26,10 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SkillAppAdoDapperWebApi.BLL\SkillAppAdoDapperWebApi.BLL.csproj" />
-    <ProjectReference Include="..\SkillAppAdoDapperWebApi.DAL\SkillAppAdoDapperWebApi.DAL.csproj" />
-    <ProjectReference Include="..\Token\Token.csproj" />
-    <ProjectReference Include="..\Validators\Validators.csproj" />
+    <ProjectReference Include="..\SkillAppAdoDapperWebApi.BLL\AeroportWebApi.BLL.csproj" />
+    <ProjectReference Include="..\SkillAppAdoDapperWebApi.DAL\AeroportWebApi.DAL.csproj" />
+    <ProjectReference Include="..\Token\AeroportWebApi.Token.csproj" />
+    <ProjectReference Include="..\Validators\AeroportWebApi.Validators.csproj" />
   </ItemGroup>
 
 

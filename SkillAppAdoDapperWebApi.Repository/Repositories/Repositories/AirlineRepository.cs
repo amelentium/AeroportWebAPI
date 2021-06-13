@@ -1,20 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
-using SkillAppAdoDapperWebApi.Repository.Interfaces.Repositories;
-using SkillManagement.DataAccess.Core;
+﻿using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Infrastructure.Contexts;
+using AeroportWebApi.Repository.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SkillManagement.DataAccess.Repositories
+namespace AeroportWebApi.Repository.Repositories.Repositories
 {
     public class AirlineRepository : GenericRepository<Airline, int>, IAirlineRepository
     {
-        private readonly AeroDbContext _context;
         public AirlineRepository(AeroDbContext context) : base(context)
         {
-            _context = context;
+
         }
 
         public new async Task Add(Airline airline)
@@ -29,20 +27,19 @@ namespace SkillManagement.DataAccess.Repositories
 
         public new async Task<Airline> Get(int Id)
         {
-            var result = await GetAll();
-            return result.FirstOrDefault(l => l.Id == Id);
+            return await _context.Airlines
+                .Include(l => l.Aeroplanes)
+                .FirstOrDefaultAsync(l => l.Id == Id);
         }
 
         public new async Task<List<Airline>> GetAll()
         {
-            var result = await _context.Airlines
+            return await _context.Airlines
                 .Include(l => l.Aeroplanes)
                 .ToListAsync();
-
-            return result;
         }
 
-        public new async Task Update(Airline airline)
+        public new async void Update(Airline airline)
         {
             var existingAirline = await Get(airline.Id);
 

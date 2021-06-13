@@ -1,19 +1,21 @@
-﻿using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
-using System;
+﻿using AeroportWebApi.Repository.Interfaces;
+using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.DAL.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using FluentValidation.Results;
+using FluentValidation;
 
-namespace SkillAppAdoDapperWebApi.BLL.Services
+namespace AeroportWebApi.BLL.Services
 {
     public class AirlineService : IAirlineService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public AirlineService(IUnitOfWork unitOfWork)
+        private readonly IValidator<Airline> _validator;
+        public AirlineService(IUnitOfWork unitOfWork, IValidator<Airline> validator)
         {
             _unitOfWork = unitOfWork;
+            _validator = validator;
         }
 
         public async Task AddAirline(Airline airline)
@@ -47,6 +49,16 @@ namespace SkillAppAdoDapperWebApi.BLL.Services
         async Task Complete()
         {
             await _unitOfWork.Complete();
+        }
+
+        public async Task<bool> IsAirlineExist(Airline airline)
+        {
+            return await _unitOfWork.AirlineRepository.IsExist(airline);
+        }
+
+        public ValidationResult AirlineValidation(Airline airline)
+        {
+            return _validator.Validate(airline);
         }
     }
 }

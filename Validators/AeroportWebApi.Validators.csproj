@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SkillAppAdoDapperWebApi.DAL\SkillAppAdoDapperWebApi.DAL.csproj" />
-    <ProjectReference Include="..\SkillAppAdoDapperWebApi.Infrastructure\SkillAppAdoDapperWebApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\SkillAppAdoDapperWebApi.DAL\AeroportWebApi.DAL.csproj" />
+    <ProjectReference Include="..\SkillAppAdoDapperWebApi.Infrastructure\AeroportWebApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

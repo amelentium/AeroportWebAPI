@@ -1,7 +1,6 @@
-﻿using SkillAppAdoDapperWebApi.DAL.Interfaces;
-using System.Collections.Generic;
+﻿using AeroportWebApi.DAL.Interfaces;
 
-namespace SkillAppAdoDapperWebApi.DAL.Entities
+namespace AeroportWebApi.DAL.Entities
 {
     public class CompanyPlane : IEntity<int>
     {
@@ -9,6 +8,5 @@ namespace SkillAppAdoDapperWebApi.DAL.Entities
         public Airline Company { get; set; }
         public Aeroplane Plane { get; set; }
         public string Mark { get; set; }
-
     }
 }

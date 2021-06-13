@@ -1,21 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
-using SkillAppAdoDapperWebApi.Repository.Interfaces.Repositories;
-using SkillManagement.DataAccess.Core;
+﻿using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Infrastructure.Contexts;
+using AeroportWebApi.Repository.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SkillManagement.DataAccess.Repositories
+namespace AeroportWebApi.Repository.Repositories.Repositories
 {
     public class PassengerRepository : GenericRepository<Passenger, int>, IPassengerRepository
     {
-        private readonly AeroDbContext _context;
         public PassengerRepository(AeroDbContext context) : base(context)
         {
-            _context = context;
+
         }
 
         public new async Task Add(Passenger passenger)
@@ -27,29 +24,43 @@ namespace SkillManagement.DataAccess.Repositories
 
         public new async Task<Passenger> Get(int Id)
         {
-            var result = await GetAll();
-            return result.FirstOrDefault(p => p.Id == Id);
+            return await _context.Passengers
+                .Include(p => p.Flight)
+                .Include(p => p.Flight.Plane)
+                .Include(p => p.Flight.Plane.Plane)
+                .Include(p => p.Flight.Plane.Company)
+                .Include(p => p.Flight.ArriveTo)
+                .Include(p => p.Flight.DepartFrom)
+                .FirstOrDefaultAsync(p => p.Id == Id);
         }
 
         public new async Task<List<Passenger>> GetAll()
         {
-            var result = await _context.Passengers
-                .Include(f => f.Flight)
-                .Include(f => f.Flight.Plane)
-                .Include(f => f.Flight.ArriveTo)
-                .Include(f => f.Flight.DepartFrom)
+            return await _context.Passengers
+                .Include(p => p.Flight)
+                .Include(p => p.Flight.Plane)
+                .Include(p => p.Flight.Plane.Plane)
+                .Include(p => p.Flight.Plane.Company)
+                .Include(p => p.Flight.ArriveTo)
+                .Include(p => p.Flight.DepartFrom)
                 .ToListAsync();
-
-            return result;
         }
 
         public async Task<List<Passenger>> GetAllPassengersByFlightId(int flightId)
         {
-            var result = await GetAll();
-            return result.FindAll(e => e.Flight.Id == flightId);
+            return await _context.Passengers
+                .Include(p => p.Flight)
+                .Include(p => p.Flight.Plane)
+                .Include(p => p.Flight.Plane.Plane)
+                .Include(p => p.Flight.Plane.Company)
+                .Include(p => p.Flight.ArriveTo)
+                .Include(p => p.Flight.DepartFrom)
+                .Where(p => p.Flight.Id == flightId)
+                .ToListAsync();
+                
         }
 
-        public new async Task Update(Passenger passenger)
+        public new async void Update(Passenger passenger)
         {
             var existingPassenger = await Get(passenger.Id);
 

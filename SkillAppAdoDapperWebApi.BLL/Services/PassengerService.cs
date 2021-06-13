@@ -1,10 +1,10 @@
-﻿using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Repository.Interfaces;
+﻿using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Repository.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.BLL.Services
+namespace AeroportWebApi.BLL.Services
 {
     public class PassengerService : IPassengerService
     {
@@ -44,6 +44,11 @@ namespace SkillAppAdoDapperWebApi.BLL.Services
         {
             await _unitOfWork.PassengerRepository.Delete(Id);
             await Complete();
+        }
+
+        public async Task<bool> IsPassengerExist(Passenger passenger)
+        {
+            return await _unitOfWork.PassengerRepository.IsExist(passenger);
         }
 
         async Task Complete()

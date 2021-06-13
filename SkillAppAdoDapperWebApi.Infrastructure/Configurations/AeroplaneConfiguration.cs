@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AeroportWebApi.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SkillAppAdoDapperWebApi.DAL.Entities;
 
-namespace SkillAppAdoDapperWebApi.Infrastructure.Configurations
+namespace AeroportWebApi.Infrastructure.Configurations
 {
     public class AeroplaneConfiguration : IEntityTypeConfiguration<Aeroplane>
-	{
-		public void Configure(EntityTypeBuilder<Aeroplane> builder)
-		{
-			
-		}
-	}
+    {
+        public void Configure(EntityTypeBuilder<Aeroplane> builder)
+        {
+
+        }
+    }
 }

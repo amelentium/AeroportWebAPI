@@ -1,6 +1,6 @@
-﻿using SkillAppAdoDapperWebApi.DAL.Entities;
+﻿using AeroportWebApi.DAL.Entities;
 
-namespace SkillAppAdoDapperWebApi.Repository.Interfaces.Repositories
+namespace AeroportWebApi.Repository.Interfaces.Repositories
 {
     public interface IAeroplaneRepository : IGenericRepository<Aeroplane, int>
     {

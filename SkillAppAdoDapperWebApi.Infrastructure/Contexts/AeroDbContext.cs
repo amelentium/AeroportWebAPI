@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AeroportWebApi.DAL.Entities;
+using AeroportWebApi.Infrastructure.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using SkillAppAdoDapperWebApi.Infrastructure.Configurations;
 
-namespace SkillAppAdoDapperWebApi.Infrastructure.Contexts
+namespace AeroportWebApi.Infrastructure.Contexts
 {
     public class AeroDbContext : IdentityDbContext
     {
@@ -20,7 +20,7 @@ namespace SkillAppAdoDapperWebApi.Infrastructure.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new CompanyPlaneConfiguration());            
+            modelBuilder.ApplyConfiguration(new CompanyPlaneConfiguration());
             modelBuilder.ApplyConfiguration(new PassengerConfiguration());
             modelBuilder.ApplyConfiguration(new FlightConfiguration());
             modelBuilder.ApplyConfiguration(new AirlineConfiguration());

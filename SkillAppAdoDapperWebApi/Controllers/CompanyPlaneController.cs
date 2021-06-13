@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AeroportWebApi.BLL.Interfaces.Services;
+using AeroportWebApi.DAL.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SkillAppAdoDapperWebApi.BLL.Interfaces.Services;
-using SkillAppAdoDapperWebApi.DAL.Entities;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
+namespace AeroportWebApi.WEBAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -42,7 +42,7 @@ namespace SkillAppAdoDapperWebApi.WEBAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await _companyPlaneService.GetAllCompanyPlane();
+            var result = await _companyPlaneService.GetAllCompanyplanes();
             return Ok(result);
         }
 

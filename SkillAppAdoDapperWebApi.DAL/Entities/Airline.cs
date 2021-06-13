@@ -1,7 +1,7 @@
-﻿using SkillAppAdoDapperWebApi.DAL.Interfaces;
+﻿using AeroportWebApi.DAL.Interfaces;
 using System.Collections.Generic;
 
-namespace SkillAppAdoDapperWebApi.DAL.Entities
+namespace AeroportWebApi.DAL.Entities
 {
     public class Airline : IEntity<int>
     {

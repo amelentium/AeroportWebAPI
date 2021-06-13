@@ -1,10 +1,8 @@
-﻿using SkillAppAdoDapperWebApi.DAL.Entities;
-using System;
+﻿using AeroportWebApi.DAL.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
+namespace AeroportWebApi.BLL.Interfaces.Services
 {
     public interface ICompanyPlaneService
     {
@@ -12,9 +10,13 @@ namespace SkillAppAdoDapperWebApi.BLL.Interfaces.Services
 
         Task<CompanyPlane> GeCompanyPlaneById(int Id);
 
-        Task<List<CompanyPlane>> GetAllCompanyPlane();
+        Task<List<CompanyPlane>> GetAllCompanyplanes();
+        Task<List<CompanyPlane>> GetAllCompanyplanesByCompanyId(int companyId);
+        Task<List<CompanyPlane>> GetAllCompanyplanesByPlaneId(int planeId);
 
         Task UpdateCompanyPlane(CompanyPlane plane);
+
+        Task<bool> IsCompanyPlaneExist(CompanyPlane plane);
 
         Task DeleteCompanyPlane(int Id);
     }

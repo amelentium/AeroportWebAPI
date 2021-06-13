@@ -1,21 +1,16 @@
-﻿using SkillAppAdoDapperWebApi.Infrastructure.Contexts;
-using SkillAppAdoDapperWebApi.DAL.Entities;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AeroportWebApi.Infrastructure.Contexts;
+using AeroportWebApi.DAL.Entities;
 
-namespace Validators
+namespace AeroportWebApi.Validators
 {
     public class AeroportValidator : AbstractValidator<Aeroport>
     {
-        private readonly AeroDbContext _context;
-        public AeroportValidator(AeroDbContext context)
+        public AeroportValidator()
         {
-            _context = context;
-
-            RuleFor(x => x)
-                .MustAsync(IsPortExist).WithMessage("An aeroport with same name is already exist");
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Aeroport name must be entered")
                 .MinimumLength(3).WithMessage("Aeroport name too short")
@@ -32,11 +27,6 @@ namespace Validators
                 .MaximumLength(20).WithMessage("City name too long")
                 .Matches("^\\D*$").WithMessage("Invalid city name entered");
 
-        }
-
-        private async Task<bool> IsPortExist(Aeroport aeroport, CancellationToken cancellationToken)
-        {
-            return !await _context.Aeroports.AnyAsync(p => p.Name == aeroport.Name, cancellationToken);
         }
     }
 }
